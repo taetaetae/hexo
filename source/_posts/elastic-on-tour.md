@@ -1,5 +1,5 @@
 ---
-title: Elastic[ON]Tour
+title: Elastic{ON}Tour
 date: 2017-12-14 12:02:45
 tags: elasticsearch
 coverImage: ElasticStackWorkshop.jpg
