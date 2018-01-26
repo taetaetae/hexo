@@ -13,14 +13,15 @@ apache access log 를 분석하고 싶은 상황이 생겼다. 아니 그보다 
 처음에 생각한 방안은 아래 그림처럼 단순했다.
 {% image model_1.png 처음 생각한 단순한 구조 %}
 하지만, 내 단순한(?) 예상은 역시 빗나갔고 logstash 에서는 다음과 같은 에러를 내뱉었다.
+
 > retrying individual bulk actions that failed or were rejected by the previous bulk request
+
 request가 많아짐에 따라 elasticsearch 가 버벅거리더니 logstash에서 대량작업은 거부하겠다며 인덱싱을 멈췄다. 고민고민하다 elasticsearch에 인덱싱할때 부하가 많이 걸리는 상황에서 중간에 버퍼를 둔 경험이 있어서 facebook그룹에 문의를 해봤다.
 https://www.facebook.com/groups/elasticsearch.kr/?multi_permalinks=1566735266745641
 역시 나보다 한참을 앞서가시는 분들은 이미 에러가 뭔지 알고 있으셨고, 중간에 버퍼를 두고 하니 잘된다는 의견이 있어 나도 따라해봤다. 물론 답변중에 나온 redis가 아닌 기존에도 비슷한 구조에서 사용하고 있던 kafka를 적용.
 아, 그전에 현재구성은 Elasticsearch 노드가 총 3대로 클러스터 구조로 되어있는데 노드를 추가로 늘리며 스케일 아웃을 해보기전에 할수있는 마지막 방법이다 생각하고 중간에 kafka를 둬서 부하를 줄여보고 싶었다. (언제부턴가 마치 여러개의 톱니바퀴가 맞물려 돌아가는듯한 시스템 설계를 하는게 재밌었다.) 아래 그림처럼 말이다.
 {% image model_2.png 그나마 좀더 생각한 구조 %}
 그랬더니 거짓말 처럼 에러하나 없이 잘 인덱싱이 될수 있었다. logstash가 양쪽에 있는게 약간 걸리긴 하지만, 처음에 생각한 구조보다는 에러가 안나니 다행이라 생각한다.
-
 
 이 구조를 적용하면서 얻은 Insight가 있기에, 각 항목별로 적어 보고자 한다. ( ~~이것만 적어놓기엔 너무 없어보여서..~~ )
 
