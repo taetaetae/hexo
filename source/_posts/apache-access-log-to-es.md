@@ -14,7 +14,6 @@ apache access log 를 분석하고 싶은 상황이 생겼다. 아니 그보다 
 {% image model_1.png 처음 생각한 단순한 구조 %}
 하지만, 내 단순한(?) 예상은 역시 빗나갔고 logstash 에서는 다음과 같은 에러를 내뱉었다.
 > retrying individual bulk actions that failed or were rejected by the previous bulk request
-
 request가 많아짐에 따라 elasticsearch 가 버벅거리더니 logstash에서 대량작업은 거부하겠다며 인덱싱을 멈췄다. 고민고민하다 elasticsearch에 인덱싱할때 부하가 많이 걸리는 상황에서 중간에 버퍼를 둔 경험이 있어서 facebook그룹에 문의를 해봤다.
 https://www.facebook.com/groups/elasticsearch.kr/?multi_permalinks=1566735266745641
 역시 나보다 한참을 앞서가시는 분들은 이미 에러가 뭔지 알고 있으셨고, 중간에 버퍼를 두고 하니 잘된다는 의견이 있어 나도 따라해봤다. 물론 답변중에 나온 redis가 아닌 기존에도 비슷한 구조에서 사용하고 있던 kafka를 적용.
@@ -103,3 +102,10 @@ output{
 매번 새로운 기술을 습득할때마다 느끼는거지만, 고전 기술로 어렵게 어렵게 시간을 소비하며 구성하는 것보다 새로운 기술을 빨리 습득하고 삽질할 시간에 더 다양한 생각을 해보는게 좋은것 같다. 특히 이 Elasticsearch 는 설정 몇번만으로 이렇게 강력한(?) 구성을 만들수 있다는거에 너무 신기하면서도 감사하다.
 
 자, 다음엔 또 어떤걸 해볼수 있을까!? 가즈아~
+
+- 2018. 01. 26 추가
+  각 버전은 다음과 같다. (es를 어서 업그레이드 해야하는데...)
+  elasticsearch : 2.4.0
+  logstash : logstash-5.4.3
+  kafka : 0.11.0.0
+  apache : 2.2.x
