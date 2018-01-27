@@ -21,6 +21,9 @@
                                .replace(/<!-- ?content ?-->/g, '<div class="main-content-wrap">');
 %>
 <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    <div class="main-content-wrap">
+        <%- partial('ad') %>
+    </div>
     <% if (post.coverCaption) { %>
         <span class="post-header-cover-caption caption"><%= post.coverCaption %></span>
     <% } %>
@@ -34,6 +37,7 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        <%- partial('ad') %>
         <% if ((post.tags) && (post.tags.length > 0)) { %>
             <div class="post-footer-tags">
                 <span class="text-color-light text-small"><%= __('post.tagged_in') %></span><br/>
