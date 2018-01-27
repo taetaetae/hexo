@@ -22,7 +22,6 @@
                  class="<%= (page.coverImage ? 'hasCover' : '') %>
                         <%= (page.coverMeta === 'out' ? 'hasCoverMetaOut' : 'hasCoverMetaIn') %>
                         <%= (page.coverCaption ? 'hasCoverCaption' : '') %>">
-                <%- partial('adsense') %>
                 <%- body %>
                 <%- partial('_partial/footer', null, {cache: !config.relative_link}) %>
             </div>
