@@ -52,7 +52,7 @@ from selenium.webdriver.chrome.options import Options
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 
-driver  = webdriver.Chrome(executable_path='home1/~~~/chromedriver', chrome_options=chrome_options)
+driver  = webdriver.Chrome(executable_path='home/~~~/chromedriver', chrome_options=chrome_options)
 driver.implicitly_wait(3)
 driver.get('https://band.us/home')
 
@@ -65,3 +65,5 @@ driver.find_element_by_class_name('_loginLink').click()
 ### 마치며
 `selenium` 에 대해 찾아보면 거의 윈도우 환경에서 돌아가는것들에 대한 포스팅이 많았다. 난 리눅스 환경에서 스케쥴러(젠킨스 같은)를 통해 자동으로 화면없이 작동시키고 싶었는데 아무리 찾아봐도 + 삽질해도 잘 안되었다. 결국 사내에도 나같은 삽질을 하신 분을 찾고 묻고 물어 `크롬드라이버`만 있어야 하는것이 아니라 `크롬앱`또한 있어야 동작을 한다는것을 알게 되었다.
 역시, 내가 한 삽질은 누군가 이미 한 삽질이라는걸 다시한번 깨닳은 좋은(?) 시간이였다.
+
+이걸로 나중에 내가 맡고있는 서비스에 대한 웹 자동 테스트 툴도 만들어 볼 생각이다.
