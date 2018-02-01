@@ -30,7 +30,7 @@ apache 2.x를 사용하고 별도의 로그 포맷을 정하지 않으면 아래
 ```
 123.1.1.1 - - [25/Jan/2018:21:55:35 +0900] "GET /api/test?param=12341234 HTTP/1.1" 200 48 1144 "http://www.naver.com/" "Mozilla/5.0 (iPhone; CPU iPhone OS 11_1_2 like Mac OS X) AppleWebKit/604.3.5 (KHTML, like Gecko) Mobile/15B202 NAVER(inapp; blog; 100; 4.0.44)"
 ```
-그럼 이 로그를 아무 포맷팅 없이 로깅을 하면 그냥 한줄의 텍스트가 인덱싱이 된다. 하지만 이렇게 되면 elasticsearch 데이터를 다시 재가공하거나 별도의 작업이 필요할수도 있으니 중간에 있는 logstash에게 일을 시켜 좀더 nice 한 방법으로 인덱싱을 해보자. 바로 logstash 의 filter 기능이다. 그중 Grok filter 라는게 있는데 패턴을 적용하여 row data 를 필터링하는 기능이다. 조금 찾아보니 너무 고맙게도 아파치 필터 예제가 있어 조금 다듬더서 적용할수 있었다. http://grokconstructor.appspot.com/do/match?example=2 
+그럼 이 로그를 아무 포맷팅 없이 로깅을 하면 그냥 한줄의 텍스트가 인덱싱이 된다. 하지만 이렇게 되면 elasticsearch 데이터를 다시 재가공하거나 별도의 작업이 필요할수도 있으니 중간에 있는 logstash에게 일을 시켜 좀더 nice 한 방법으로 인덱싱을 해보자. 바로 logstash 의 filter 기능이다. 그중 Grok filter 라는게 있는데 패턴을 적용하여 row data 를 필터링하는 기능이다. 조금 찾아보니 너무 고맙게도 아파치 필터 예제가 있어 수정하여 적용할수 있었다. http://grokconstructor.appspot.com/do/match?example=2 
 그래서 적용한 필터설정은 다음과 같다.
 ```
 filter {
