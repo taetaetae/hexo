@@ -8,8 +8,8 @@ tags:
   - kafka
   - access log
 ---
-apache access log 를 분석하고 싶은 상황이 생겼다. 아니 그보다 apache access에 대해서 실시간으로 보고싶었고, log를 검색 & 데이터를 가공하여 유의미한 분석결과를 만들어 보고 싶었다. 그에 생각한것이 (역시) `ElasticStack`.
-<!-- more -->
+apache access log 를 분석하고 싶은 상황이 생겼다. 아니 그보다 apache access에 대해서 실시간으로 보고싶었고, log를 검색 & 데이터를 가공하여 유의미한 분석결과를 만들어 보고 싶었다. 그에 생각한것이 (역시) `ElasticStack`.<!-- more -->
+
 처음에 생각한 방안은 아래 그림처럼 단순했다.
 {% image model_1.png 처음 생각한 단순한 구조 %}
 하지만, 내 단순한(?) 예상은 역시 빗나갔고 logstash에서는 다음과 같은 에러를 내뱉었다.

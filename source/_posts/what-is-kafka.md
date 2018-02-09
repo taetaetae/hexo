@@ -6,8 +6,8 @@ categories:
 tags: 
   - kafka
 ---
-내가 맡고있는 서비스에 Elastic Stack 을 도입하면서 중간에 버퍼가 필요하여 Message-Queue 시스템들을 알아보던 중 Kafka 에 대해 알아보고, 정리를 해보게 된다.
-<!-- more -->
+내가 맡고있는 서비스에 Elastic Stack 을 도입하면서 중간에 버퍼가 필요하여 Message-Queue 시스템들을 알아보던 중 Kafka 에 대해 알아보고, 정리를 해보게 된다.<!-- more -->
+
 ![](kafka.png)
 ### # 기본설명 및 기존 메세징 시스템과 다른점
 - 메세징 큐의 일종
