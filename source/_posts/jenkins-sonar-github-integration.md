@@ -58,8 +58,8 @@ $ ./sonar.sh start
 Starting SonarQube...
 Started SonarQube.
 ```
-기본적으로 9001포트를 사용하고 있으니 다른포트를 사용하고자 한다면 /sonarqube-6.7.1/conf/sonar.properties 내 `sonar.search.port=9001` 을 수정해주면 된다. (SonarQube도 Elasticsearch를 사용하구나...) 
-설치후 실행을 한뒤 `서버IP:9001`을 접속해보면 아래 화면처럼 나온다. (혹시 접속이 안된다거나 서버가 실행이 안된다면 `./sonar.sh console`로 로그를 보면 문제해결에 도움이 될수도 있다. )
+기본적으로 9000포트를 사용하고 있으니 다른포트를 사용하고자 한다면 /sonarqube-6.7.1/conf/sonar.properties 내 `sonar.web.port=9000` 을 수정해주면 된다. (SonarQube도 Elasticsearch를 사용하구나...) 
+설치후 실행을 한뒤 `서버IP:9000`을 접속해보면 아래 화면처럼 나온다. (혹시 접속이 안된다거나 서버가 실행이 안된다면 `./sonar.sh console`로 로그를 보면 문제해결에 도움이 될수도 있다. )
 {% image center sonar_main.png SonarQube 메인화면 %}
 
 ### # SonarQube Scanner 설치
@@ -75,12 +75,13 @@ jenkins 설치는 간단하니 별도 언급은 안하고 넘어가...려고 했
 https://jenkins.io/download/ 에서 최신버전을 tomcat/webapps/ 아래에 다운받고 server.xml 을 적절하게 수정해준다.
 ```
 $ wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war
-$ tomcat/conf/server.xml
+$ vi tomcat/conf/server.xml
 <Connector port="19001" protocol="HTTP/1.1" # 포트 변경
 <Context path="/jenkins" debug="0" privileged="true" docBase="jenkins.war" /> #추가
 # tomcat/bin/startup.sh
 ```
-jenkins 설치후 필요한 플러그인을 추가로 설치해준다.
+
+jenkins 설치를 완료 한 후 필요한 플러그인을 추가로 설치해준다.
 - Python Plugin
 - GitHub Pull Request Builder
 - GitHub plugin
@@ -141,6 +142,7 @@ SonarQube job을 작성할 차례다. 1번 job에서 파라미터를 보내주�
 {% image center jenkins_config_source.png 소스코드 관리 설정 %}
 
 마지막으로 최종 목적이였던 SonarQube 분석을 할 차례인데, 이번에 SonarQube가 버전업이 되면서 java 기분 .java 파일만 가지고 하는게 아니라 .java파일을 컴파일 하면 나오는 .class파일 경로를 필수로 지정해줘야 한다고 한다. (예전에는 .class 파일 경로를 지정하지 않아도 되었는데 홈페이지 설명에 의하면 바이너리 파일까지 같이 분석하게 되면 분석 신뢰도가 높아진다고 한다.)
+https://docs.sonarqube.org/display/PLUG/Java+Plugin+and+Bytecode
 
 > 딴 이야기로, 난 여태까지 정적분석이라는건 코드만을 가지고 하는줄 알았다. 자바 기준에서는 .java . 하지만 이번에 SonarQube 설정을 하면서 알게된 부분으로, 정적분석이라는건 맨 위에 적어놨듯 `실제 프로그램을 실행하지 않고 코드만의 형태에 대한 분석` 이기 때문에 java 기준에서는 .class 파일또한 분석의 대상으로 볼수가 있다. (실제로 구버전 - .java만 분석 / 신버전 - .java + .class 분석 을 해봤더니 불필요한 분석결과(?)가 줄어든것을 알수 있었다. )
 
@@ -175,4 +177,4 @@ sonar.java.binaries=target/classes # 빌드 결과물 경로
 
 
 ### # 마치며
-반복적인 일에 대해서 자동화 구성을 한다는것은 참 의미있는 일인것 같다. 팀내 이런 구성을 도입하구서 획기적으로 코드 품질이 나아지진 않았지만 자칫 잘못해서 merge가 되는 위험한 코드들은 어느정도 SonarQube가 잡아주는것 같다. 사족이지만, 이렇게 적고나니 간단한데 이런 구성에 대한 정보를 알기까지는 엄청난 시간이 들었기에... 오랜만에 포스팅에 대한 뿌듯함을 다시한번 느낀다.
+반복적인 일에 대해서 자동화 구성을 한다는것은 참 의미있는 일인것 같다. 팀내 이런 구성을 도입하구서 획기적으로 코드 품질이 나아지진 않았지만 자칫 잘못해서 merge가 되는 위험한 코드들은 어느정도 SonarQube가 잡아주는것 같다. 사족이지만, 이렇게 적고나니 간단한데 이런 구성에 대한 정보를 알기까지는 엄청난 시간이 들었기에... 오랜만의 포스팅에 대한 뿌듯함을 다시한번 느낀다.
