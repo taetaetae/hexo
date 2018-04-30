@@ -10,8 +10,8 @@ tags:
   - Logstash
   - Kibana
 ---
-주변에 PC, 스마트폰이 없으면 이상한 요즘 다양한 OS와 다양한 브라우저들이 존재한다. 이때, 내가 운영하는 웹서버에 들어오는 사람들은 무슨 기기로 접속을 하는 것일까? 혹여 특정 OS의 특정 브라우저에서만 안되는 버그를 잡기 위해 몇일밤을 고생하며 겨우 수정했는데 그 OS의 브라우저에서는 접속은 하기나 하는걸까? (ㅠㅠ) <!-- more -->
-이렇게 사용자의 접속 Device 정보를 알고있다면 고생하며 버그를 잡기 전에 먼저 사용율을 체크해 볼수도 있고(간단한 얼럿으로 해결한다거나?) 비지니스 모델까지 생각해야하는 서비스라면 타겟팅을 정하는 등 다양한 활용도가 높은 `User-Agent`(이하 UA). 일반 Apache 를 웹서버로 운영하고 있다고 가정을 하고 어떻게 분석을 할수 있었는지, 그리고 분석을 하며 좀더 우아한(?) 방법은 없는지 알아 보고자 한다. 
+Desktop 및 스마트폰의 대중화로 다양한 OS와 브라우저들을 사용하게 되었다. 이때, 내가 운영하는 웹서버에 들어오는 사람들은 무슨 기기로 접속을 하는 것일까? 혹여 특정 OS의 특정 브라우저에서만 안되는 버그를 잡기 위해 몇일밤을 고생하며 겨우 수정했는데... 과연 그 OS의 브라우저에서는 접속은 하기나 하는걸까? (ㅠㅠ) <!-- more -->
+만약, 접속 사용자의 Device 정보를 알고있다면 고생하며 버그를 잡기 전에 먼저 해당 Device 사용율을 체크해 볼수도 있고(수정이 아닌 간단한 얼럿으로 해결한다거나?) 비지니스 모델까지 생각해야하는 서비스라면 타겟팅을 정하는 등 다양한 활용도가 높은 것이 바로 `User-Agent`라고 한다(이하 UA). 일반 Apache 를 웹서버로 운영하고 있다고 가정을 하고 어떻게 분석을 할수 있었는지, 그리고 분석을 하며 좀더 우아한(?) 방법은 없는지 알아 보고자 한다. 
 
 ### # User-Agent가 뭐야?
 백문이 불여일타(?)라 했던가, 우선 http://www.useragentstring.com 를 들어가보자. 그러면 자신의 OS 및 브라우저 등 정보를 파싱해서 보여주는데 [위키백과](https://en.wikipedia.org/wiki/User_agent)에 따르면 '사용자를 대신하여 일을 수행하는 소프트웨어 에이전트'라고 한다. 즉, UA만 알아도 어떤 기기/브라우저를 사용하는지 알 수 있다는것. 
@@ -19,15 +19,17 @@ tags:
 {% image center browser_compatibility.png 출처 : developer.mozilla.org %}
 
 ### # 기존의 방법
-그럼 어떻게 내 서버에 들어온 사용자들의 UA를 확인할 수 있을까? (앞서 Apache를 웹서버로 운영한다고 했으니) Apache access log 에는 Apache에서 제공해주는 모듈을 이용해 접속한 클라이언트의 정보가 남겨지곤 한다. 그렇다면 이 access log를 리눅스 명령어든 엑셀로 뽑아서든지 활용해서 정규식으로 포맷팅 하고 그 결과를 다시 그룹화 시키면 얼추 원하는 데이터를 추출해 낼수 있다.
+그럼 어떻게 내 서버에 들어온 사용자들의 UA를 확인할 수 있을까? (앞서 Apache를 웹서버로 운영한다고 했으니) Apache access log 에는 Apache에서 제공해주는 모듈을 이용해 접속한 클라이언트의 정보가 남겨지곤 한다. 그렇다면 이 access log를 리눅스 명령어든 엑셀로 뽑아서든지 활용해서 정규식으로 포맷팅 하고 그 결과를 다시 그룹화 시키면 얼추 원하는 데이터를 추출해 낼수 있다. ( 버거형들이 만들어둔 정규식을 가져다 사용할수도 있겠다. https://regexr.com/?37l4e )
 하지만, 우선 자동화가 안되어있어 데이터를 구하고 싶을때마다 귀차니즘에 걸릴수 있고 슈퍼 개발자 파워를 기반으로(?) 데이터 추출을 자동화 한들 `실시간`으로 보고싶을땐 제한사항이 많다.
 
 ### # 좀더 나은 방법(?)
 실시간 데이터를 모니터링 하는데에는 다양한 오픈소스와 다양한 툴이 있겠지만 경험이 부족한건지 아직까진 ElasticStack 만한걸 못본것 같다. 간단하게 설명을 하면 access log 를 사용하지 않고 front단에서 javascript 로 UA를 구한다음 이러한 정보를 받을수 있는 API를 만들어 그쪽으로 보내면 서버에서 해당 UA를 분석해서 카프카로 보내고 ..!@#$%^blabla...
 ^^; 그림으로 보자.
-{% image center user_agent_method_1.png 출처 : 좀더 나은 방법 %}
+{% image center user_agent_method_1.png 좀더 나은 방법 %}
 front단에서는 `navigator.userAgent`를 활용하여 UA를 구할수 있었고, API에서는 UA를 받고 파싱을 하는데 관련 코드는 다음과 같이 작성하였다.
 ```java
+private static final String VERSION_SEPARATOR = ".";
+
 private void userAgentParsingToMap(String userAgent, Map<String, Object> dataMap) {
     HashMap browser = Browser.lookup(userAgent);
     HashMap os = OS.lookup(userAgent);
@@ -93,7 +95,7 @@ Logstash 에는 UA를 파싱해주는 filter plugin 이 있다고 한다. ([링�
 > 지난 포스팅 : [링크](https://taetaetae.github.io/2018/01/25/apache-access-log-to-es)
 
 물론 글보다는 그림설명이 더 빠르니 전체적인 흐름을 그림으로 보자.
-{% image center user_agent_method_2.png 출처 : 좀더 우아한 방법 %}
+{% image center user_agent_method_2.png 좀더 우아한 방법 %}
 ① front 단에서 javascript로 UA를 구하고 ② 별도로 만든 API에 데이터를 전송한뒤 ③ API에서는 이를 또 파싱하는 작업을 logstash 의 `user-agent filter plugin`으로 깔끔하게 해결할 수 있었다. 
 우선 apache에서 access log format 은 다음과 같고
 ```
