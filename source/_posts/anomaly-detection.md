@@ -88,7 +88,8 @@ for data in response_list :
     query_result[data['key_as_string'].replace('T',' ').replace('.000+09:00', '')] = data['doc_count']
 ```
 
-elasticsearch에서 aggregation을 활용하여 데이터를 1시간 단위로 가져올경우 데이터가 없기때문에 데이터가 없을 경우 0으로 맞춰주기 위해 loop를 돌며 데이터를 정제해준다. (이 방법보다 더 좋은 방법이 분명 있을것이다...)
+elasticsearch에서 aggregation을 활용하여 데이터를 1시간 단위로 가져올경우 데이터가 없는 경우를 대비해 비어있는 시간에 해당하는 카운트를 0으로 맞춰주기 위하여 loop를 돌며 데이터를 정제해준다. (이 방법보다 더 좋은 방법이 분명 있을것이다...)
+
 ```python
 anomaly_detection_base_data = {}
 
