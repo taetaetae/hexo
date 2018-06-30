@@ -1,6 +1,6 @@
 ---
 title: 초간단 API서버 만들기 - 1부 (Python + Flask + Apache)
-date: 2018-07-01 10:00:00
+date: 2018-07-01 01:00:00
 thumbnailImage: flask-apache-python.png
 categories:
   - tech

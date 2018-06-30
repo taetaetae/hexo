@@ -1,6 +1,6 @@
 ---
 title: 초간단 API서버 만들기 - 2부 (Python + Flask + Nginx)
-date: 2018-07-02 10:00:00
+date: 2018-07-01 02:00:00
 thumbnailImage: flask-apache-nginx.png
 categories:
   - tech
