@@ -71,7 +71,7 @@ $ tar -zxvf 3.5.tar.gz
 $ cd mod_wsgi-3.5
 - 아파치의 빌드툴인 apxs의 경로를 설정해주고
 - 필자와 같이 기본 python 버전을 사용하지 않을꺼라면 꼭 python경로를 설정해줘야 한다! (중요)
-$ ./configure --with-apxs=/home1/irteam/apps/apache/bin/apxs --with-python=/usr/bin/python3.6
+$ ./configure --with-apxs=/~~~/apps/apache/bin/apxs --with-python=/usr/bin/python3.6
 - make 파일을 만들고
 $ make
 - 설치~
