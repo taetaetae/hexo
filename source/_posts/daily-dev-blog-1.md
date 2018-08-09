@@ -14,7 +14,7 @@ thumbnailImage: ddb-thumnail.png
 하나의 글에 관련 내용을 모두 담기에는 양이 많아서 읽는사람도 지루하고, 글을 쓰는 필자 또한 `어불성설` 할것같아 크게 3개의 시리즈로 나눠서 최대한 자세하고 현장감(?)있게 글을 써보려고 노력했다.
 
 - 1부 : [왜 만들게 되었는가 그리고 어떤 구조로 만들었는가](https://taetaetae.github.io/2018/08/05/daily-dev-blog-1/)
-- 2부 : 문제발생 및 Trouble Shooting
+- 2부 : [문제발생 및 Trouble Shooting](https://taetaetae.github.io/2018/08/05/daily-dev-blog-2/)
 - 3부 : 앞으로의 계획과 방향성
 
 글에 들어가기 앞서 최종 결과는 http://daily-devblog.com 에서 확인할수 있다.
