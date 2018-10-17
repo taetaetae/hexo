@@ -123,7 +123,7 @@ print('예측 최대치 : ' + check_datetime  + ' → ' +  str(forecast_max_coun
 ```
 여기서는 에러 카운트가 평소와는 다르게 발생할 경우에 알림을 발송을 하려 하기때문에 아래처럼 구성을 해준다.
 ```python
-if check_datetime_count < forecast_min_count :
+if check_datetime_count > forecast_max_count :
   # 예측한 결과를 이미지로 저장후 알림에 포함시켜준다.
   forecast_graph = m.plot(forecast, plot_cap=False, xlabel='time', ylabel='count');
   file_name = 'forecast_graph.png'
