@@ -11,7 +11,7 @@ thumbnailImage: ddb-thumnail.png
 
 - 1부 : [왜 만들게 되었는가 그리고 어떤 구조로 만들었는가](https://taetaetae.github.io/2018/08/05/daily-dev-blog-1/)
 - 2부 : [문제발생 및 Trouble Shooting](https://taetaetae.github.io/2018/08/09/daily-dev-blog-2/)
-- 3부 : 앞으로의 계획과 방향성
+- 3부 : [앞으로의 계획과 방향성](https://taetaetae.github.io/2019/02/17/daily-dev-blog-3/)
 
 지난 1부에서 이야기 했던것처럼 문제 - 해결, 문제 - 해결 식으로 나열해보고자 한다. 다소 글의 전개가 뒤죽박죽일수도 있겠지만 말 그대로 `트러블슈팅 종합세트`이니 독자들의 양해를 미리 구한다.
 

@@ -15,7 +15,7 @@ thumbnailImage: ddb-thumnail.png
 
 - 1부 : [왜 만들게 되었는가 그리고 어떤 구조로 만들었는가](https://taetaetae.github.io/2018/08/05/daily-dev-blog-1/)
 - 2부 : [문제발생 및 Trouble Shooting](https://taetaetae.github.io/2018/08/09/daily-dev-blog-2/)
-- 3부 : 앞으로의 계획과 방향성
+- 3부 : [앞으로의 계획과 방향성](https://taetaetae.github.io/2019/02/17/daily-dev-blog-3/)
 
 글에 들어가기 앞서 최종 결과는 http://daily-devblog.com 에서 확인할수 있다.
 
