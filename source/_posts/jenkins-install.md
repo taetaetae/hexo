@@ -18,7 +18,7 @@ tags:
 우선 CentOS 환경에 Java가 설치되어 있는 상황이라 가정한다.
 - 적당한 위치에 tomcat 다운 ( https://tomcat.apache.org/download-80.cgi )
   ```
-  wget http://apache.mirror.cdnetworks.com/tomcat/tomcat-8/v8.5.35/bin/apache-tomcat-8.5.35.tar.gz
+  wget {압축파일 다운경로, 필자는 apache-tomcat-8.5.35 }
   ```
 - 압축 해제후 하위 폴더중 webapps로 이동
   ```
