@@ -18,15 +18,15 @@ thumbnailImage: logo.jpg
 - mybatis 를 사용해서
 - mysql 을 연동하는것 (AWS 의 RDS를 사용, 추후 RDS사용법에 대해 블로깅 예정)
 
-위와같은 상황을 처음 접하는 분들께 도움이 되었으면 하는 바램으로 짧게나마 필자의 삽질기를 여행해보자.
+위와 같은 상황을 처음 접하는 분들께 도움이 되었으면 하는 바램으로 짧게나마 필자의 삽질기를 여행해보자.
 
 ### # Spring boot 2 프로젝트 만들기
-필자는 IntelliJ 로 사용하고 있다보니 프로젝트를 새로 만들려고 할때 클릭 몇번만으로 dependency 설정까지 다 해줘서 좋았다. 혹 이클립스나 다른 IDE를 사용하고 있다면 https://start.spring.io/ 을 참고하면 도움이 될것같다. 여기서도 클릭 몇번으로 IntelliJ 에서 해주는 것처럼 내가 사용할 모듈을 선택하고 generate 를 누르면 프로젝트가 생성되어 다운로드 받아진다. (참 좋은 세상...)
-우선 File → New → Project 를 눌러서 아래 창을 열어보자. 그리고 뭔가 다 해줄것같은 `Spring Initializr`을 선택 (개발도 해주면 안되나...) 아래와 같은 설정을 적어준 뒤 다음을 눌러준다.
+필자는 IntelliJ를 사용하고 있어서 새로 프로젝트를 만들려고 할때 클릭 몇번만으로 dependency 설정까지 다 해주기 때문에 편하고 좋았다. 혹 이클립스나 다른 IDE를 사용하고 있다면 https://start.spring.io/ 을 참고하면 도움이 될것같다. 여기서도 클릭 몇번으로 IntelliJ 에서 해주는 것처럼 내가 사용할 모듈을 선택하고 generate 를 누르면 프로젝트가 생성되어 다운로드 받아진다. (참 좋은 세상...)
+우선 File → New → Project 를 눌러서 아래 창을 열어보자. 그리고 뭔가 다 해줄것 같은 (개발도 해주면 안되나...) `Spring Initializr`을 선택후 아래와 같은 설정을 적어준 뒤 다음을 눌러준다.
 
 {% image fancybox clear center 1.jpg %}
 
-사용할 모듈을 선택해주자. 필자는 이것저것(?)을 도와주는 `lombok`과 `Mybatis`, `MySQL`을 선택하고 프로젝트를 생성하였다. 그러면 이쁜(?) pom.xml 과 함께 당장 개발을 시작할수 있는 환경이 제공된다.
+사용할 모듈을 선택해주자. 필자는 이것저것(?)을 도와주는 `lombok`과 `Mybatis`, `MySQL`을 선택하고 프로젝트를 생성하였다. 그러면 이쁜(?) pom.xml 과 함께 당장 개발을 시작할 수 있는 환경이 제공된다.
 ```xml
 <dependencies>
 	<dependency>
@@ -48,7 +48,7 @@ thumbnailImage: logo.jpg
 
 {% image fancybox clear center 2.jpg %}
 
-우선 여기까지 잘 되었는제 확인해보기 위해 컨트롤러에 현재시간을 출력하는걸 만들어 보고
+우선 여기까지 잘 되었는제 확인해보기 위해 Controller 에 현재시간을 출력하는걸 만들어 보고
 ```java
 @RestController
 public class ApiController {
@@ -59,7 +59,7 @@ public class ApiController {
 	}
 }
 ```
-톰켓을 실행해보면 정상적으로 접속이 되는것을 확인할 수 있다.
+톰켓을 실행해보면 정상적으로 접속과 출력이 되는것을 확인할 수 있다.
 
 {% image fancybox clear center 3.jpg %}
 
@@ -73,9 +73,9 @@ spring.datasource.hikari.jdbc-url=jdbc:mysql://{url}:{port}/{db}
 spring.datasource.hikari.username={id}
 spring.datasource.hikari.password={password}
 ```
-위의 jdbc-url 항목에서 필자는 AWS에서 제공하는 RDS를 사용하기 때문에 엔드포인트와 포트를 적어주면 된다.
-Spring Boot 2.0 이후부터 기본적으로 사용되는 커넥션 풀이 [HikariCP](https://github.com/brettwooldridge/HikariCP)로 변경되었다고 한다. 커넥션 풀 종류중 성능이 좋다고 하는데 링크를 가보면 다른 커넥션 풀 라이브러리와 성능을 비교한 벤치마크 결과를 확인할 수 있다. 그래서 위처럼 `spring.datasource.hikari` 가 prefix로 붙고 각종 정보들을 적어주자.
-그 다음 Database 설정을 해주는데 과거 xml로 설정하던것에서 점점 Java Config 가 선호되고 있다. 그만큼 가독성이 좋기 때문인듯하다.
+위의 jdbc-url 항목에서 AWS에서 제공하는 RDS를 사용하는 경우 RDS에서 제공해주는 엔드포인트와 포트를 적어주면 된다. (추후 AWS - RDS에 대해 블로깅 예정이다.)
+Spring Boot 2.0 이후부터 기본적으로 사용되는 커넥션 풀이 HikariCP로 변경되었다고 한다. ([링크](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Release-Notes#hikaricp)) 커넥션 풀 종류중 성능이 좋다고 하는데 [링크](https://github.com/brettwooldridge/HikariCP)를 가보면 다른 커넥션 풀 라이브러리와 성능을 비교한 벤치마크 결과를 확인할 수 있다.
+위처럼 `spring.datasource.hikari` 가 prefix로 붙고 각종 정보들을 적어주어 config 에서 인식될수 있도록 해주자. 그 다음 DataSource 설정을 해준다.
 ```java
 @Slf4j
 @Configuration
@@ -95,7 +95,7 @@ public class DatabaseConfiguration {
 	}
 }
 ```
-DataSource 를 hikariConfig에서 설정한 정보로 만들어 준다는 의미이다. 이렇게만 하고 프로젝트를 다시 실행시켜보면 logger 에 의해 datasource 의 정보를 볼수가 있다.
+위 내용은 DataSource 를 hikariConfig에서 설정한 정보로 만들어 준다는 의미이다. 이렇게만 하고 프로젝트를 다시 실행시켜보면 logger 에 의해 datasource 의 정보를 볼수가 있다.
 ```
 2019-04-22 00:27:35.048  INFO 23040 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2019-04-22 00:27:36.221  INFO 23040 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
@@ -103,7 +103,7 @@ DataSource 를 hikariConfig에서 설정한 정보로 만들어 준다는 의미
 2019-04-22 00:27:36.527  INFO 23040 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
 
 ```
-이러면 우선 Datasource 설정이 끝났다. 
+여기까지 우선 Datasource 설정이 끝났다. 
 Q : `com.mysql.cj.jdbc.Driver` 에서 `cj`가 뭐지?
 A : 해당 클래스는 더이상 사용하지 않아 `com.mysql.jdbc.Driver`로 설정하고 실행시켜보면 아래 문구를 볼수가 있다.
 > Loading class \`com.mysql.jdbc.Driver'. This is deprecated. The new driver class is \`com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
@@ -188,3 +188,6 @@ public class ApiController {
 ### # 마치며
 {% image fancybox clear center gvsc.png %}
 이 코드를, 그리고 이 포스팅을 작성하기 직전까지만 해도 "그냥 하면 되는거 아니야?"라고 생각했지만 알고있는 지식과 막상 해보는건 정말 하늘과 땅차이 라는걸 다시한번 느끼게 되었다. (자괴감의 연속...) 더불어 Spring Boot 의 간편함에 놀라웠고 이제 회사일이 조금 잠잠해졌으니 (과연?) Spring Boot로 이것저것 만들며 스터디를 해야겠다고 다짐해본다.
+참고 URL
+- https://spring.io/guides/gs/accessing-data-mysql/
+- http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
