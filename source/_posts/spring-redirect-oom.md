@@ -1,5 +1,6 @@
 ---
 title: Spring MVC Redirect 처리중에 발생한 Out Of Memory 원인 분석하기
+date: 2019-01-10 18:39:47
 categories:
   - tech
 tags: 
