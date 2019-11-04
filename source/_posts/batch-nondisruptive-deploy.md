@@ -56,7 +56,7 @@ directory_b
 
 # directory_a 에서 directory_b 로 바꾸는 경우 (심볼릭 링크 자체를 삭제하고 다시 심볼릭 링크 생성)
 $ rm asdf
-$ ln -s directory_a
+$ ln -s directory_b asdf
 $ ll
 asdf -> directory_b
 directory_a
