@@ -139,11 +139,6 @@
             <meta property="fb:admins" content="<%= fb_admin_id %>" />
         <% }) %>
     <% } %>
-    <% if (theme.gravatar_email) { %>
-        <meta property="og:image" content="<%- gravatar(theme.gravatar_email, 640) %>"/>
-    <% } else if (theme.author.picture) { %>
-        <meta property="og:image" content="<%= resolve_asset_url(theme.image_dir, theme.author.picture) %>"/>
-    <% } %>
     <% if (photos && photos.length) { %>
         <% photos.forEach(function(photo) { %>
             <meta property="og:image" content="<%= photo %>" />
@@ -157,6 +152,11 @@
     <% if (page.coverImage && page.coverImage.length) { %>
         <meta property="og:image" content="<%= resolve_asset_url(page.path, page.coverImage) %>"/>
         <meta class="swiftype" name="image" data-type="enum" content="<%= resolve_asset_url(page.path, page.coverImage) %>" />
+    <% } %>
+    <% if (theme.gravatar_email) { %>
+        <meta property="og:image" content="<%- gravatar(theme.gravatar_email, 640) %>"/>
+    <% } else if (theme.author.picture) { %>
+        <meta property="og:image" content="<%= resolve_asset_url(theme.image_dir, theme.author.picture) %>"/>
     <% } %>
 
     <!--STYLES-->
