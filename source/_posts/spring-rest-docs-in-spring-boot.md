@@ -11,7 +11,7 @@ thumbnailImage: logo.jpg
 
 API를 개발하고 제공하기 위해서는 그에 해당하는 API 명세를 작성해서 사용하는 곳에 전달하게 된다. 어떤 URL에 어떤 파라미터를 사용해서 어떻게 요청을 하면 어떤 결과를 응답으로 내려주는지에 대한 관련 정보들. 이러한 "API 문서" 를 제공하는 방식은 상황에 따라 다양한 방법으로 사용되곤 한다. <!--more -->
 
-{% image fancybox clear center api-document.jpg 코딩과 문서화가 동기화가 되야 조금 편해질것 같다는 생각이 들었다. <br>출처 : https://dribbble.com/shots/3386291-API-Documentation %}
+{% image fancybox clear center api-document.jpg API 코드와 해당 문서의 동기화가 자동으로 되어야 조금 편해질것 같다는 생각이 들었다. <br>출처 : https://dribbble.com/shots/3386291-API-Documentation %}
 
 필자는 주로 "위키"(또는 일반 문서)를 활용해서 전달하곤 했었는데 API의 형태가 달라질 때마다 해당 위키를 수정해야만 하는 번거로움이 있었다. API 수정하면 위키도 수정하고. 깜박하고 위키 수정을 안하게 될 경우 왜 API 명세가 다르냐는 문의가... 그러다 알게된 Spring Rest Docs. (아무리 좋은 기술, 좋은 툴 이라 해도 실제로 본인이 필요로 하고 사용을 해야하는 이유가 생길때 비로소 빛을 발하는것 같은 느낌이다.)
 > 이 포스팅에서는 swegger 와 비교하는 내용은 제외할까 한다. 워낙 유명한 두 양대 산맥(?)이라 검색해보면 각각의 장단점이 자세히 나와있기에...
