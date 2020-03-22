@@ -150,3 +150,9 @@ public class TestController {
 제목에서 알 수 있듯이 다음 "2부" 에서는 "Retry"가 아닌 "Circuit Breaker"를 사용하여 "재시도"의 방법보다 조금 다른 측면에서 조금 더 괜찮은 방법으로 RestTemplate 를 사용해 보고자 한다.
 
 위에서 사용한 코드는 [필자의 Github Repo](https://github.com/taetaetae/retryable-resttemplate)에서 확인이 가능하다.
+
+참고 url
+- https://dzone.com/articles/how-to-use-spring-retry
+- https://www.baeldung.com/spring-retry
+- https://github.com/spring-projects/spring-retry
+- https://docs.spring.io/spring-batch/docs/current/reference/html/retry.html
