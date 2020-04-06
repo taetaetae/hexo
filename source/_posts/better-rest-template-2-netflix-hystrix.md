@@ -16,7 +16,7 @@ thumbnailImage: netflix_hystrix.jpg
 물론 Retryable 의 Recover 어노테이션을 활용했기 때문에 클라이언트 즉, 사용자에게는 오류응답이 발생을 안했겠지만 호출 받는 서버 자체에서의 에러가 발생하는데 이런식의 재시도를 계속 시도한다면 호출 받는 서버 입장에서는 이 "재시도" request 또한 "부하" 로 받게 되고 결국 2차, 3차 장애가 이어질 수 밖에 없다.
 기존 한덩어리로 관리되던 Monolithic Architecture 에서는 자체적으로 관리하기 때문에 이러한 에러 컨트롤 또한 자체적으로 관리를 할 수 있지만, 모듈이 모듈을 호출하게 되는 Microservice Architecture 로 바뀌다보니 이런 "연쇄 장애(?)" 같은 현상이 발생하게 되는 경우가 있다. 호출을 받는 서버의 상태가 이상하면 (에러응답이 지정한 임계치를 벗어나는 수준으로 맞춰서 발생한다면) 적절하게 호출을 하지 않고 (2차 장애를 내지 않도록 호출 자체를 하지 않고) 어느정도 기다리다 클라이언트에게는 에러응답이 아닌 미리 정해둔 응답을 내려주고, 에러가 복구되면 다시 호출하도록 하는 "무언가" 가 필요하지 않을까?
 
-{% image fancybox clear center domino.gif 연쇄 장애. 제발 멈춰... <br> http://dpg.danawa.com/mobile/community/view?boardSeq=175&listSeq=4066389 %}
+{% image fancybox clear center domino.gif 연쇄 장애. 제발 멈춰... <br> 출처 : http://dpg.danawa.com/mobile/community/view?boardSeq=175&listSeq=4066389 %}
 
 지난 포스팅에 이어 이번 포스팅 에서는 그 "무언가". 즉, Circuit-breaker 에 대해 알아보고 직접 구현 및 테스트 하면서 돌아가는 원리에 대해 이해 해보고자 한다. 막상 개념은 머릿속에 있지만 직접 구현해보지 않으면 내것이 아니기에, 직접 구현하고 설정값들을 바꿔가면서 언젠가 필요한 순간에 꺼내서 사용할 수 있는 나만의 "무기" 를 만들어 보고자 한다.
 
@@ -25,7 +25,7 @@ thumbnailImage: netflix_hystrix.jpg
 > 회로 차단기는 전기 회로에서 과부하가 걸리거나 단락으로 인한 피해를 막기 위해 자동으로 회로를 정지시키는 장치이다. 과부하 차단기와 누전 차단기로 나뉜다. 퓨즈와 다른 점은, 차단기는 어느 정도 시간이 지난 뒤, 원래의 기능이 동작하도록 복귀된다.
 
 여기서 가장 중요한 문장은 "피해를 막기 위해 자동으로 회로를 정지시키는", "어느정도 시간이 지난뒤 원래의 기능이 동작하도록 복귀된다" 이 부분이 가장 중요한 것 같다. 시스템 구성이 점점 Microservice Architecture 로 바뀌어 가는 시점에서 이러한 "서킷브레이커"는 자동으로 모듈간의 호출 에러를 감지하고 위에서 말한 "연쇄 장애"를 사전에 막을 수 있는 아주 중요한 기능이라 생각된다.
-"circuit breaker spring" 이라는 키워드로 검색해보면 이러한 고민을 이미 Netflix 라는 회사에서 Hystrix 라는 이름으로 개발이 된것을 알 수 있다. [github](https://github.com/Netflix/Hystrix) 이 core 모듈을 Spring 에서 한번 더 감싸서 Spring Boot 에서 사용하기 좋게 spring-cloud-starter-netflix-hystrix 라는 이름으로 만들어 둔 것이 있는데 이것을 활용해 보기로 하자. 
+"circuit breaker spring" 이라는 키워드로 검색해보면 이러한 고민을 이미 Netflix 라는 회사에서 [Hystrix](https://github.com/Netflix/Hystrix) 라는 이름으로 개발이 된것을 알 수 있다. 이 core 모듈을 Spring 에서 한번 더 감싸서 Spring Boot 에서 사용하기 좋게 spring-cloud-starter-netflix-hystrix 라는 이름으로 만들어 둔 것이 있는데 이것을 활용해 보기로 하자. 
 
 ### # 구현
 늘 그랬듯이 SpringBoot 프로젝트를 만들고 테스트할 Controller 를 만들어 주자. 원래대로라면 호출을 하는 모듈과 호출을 받는 모듈, 2개의 모듈을 만들어서 테스트 해야 하지만 편의를 위해 하나의 모듈에서 두개의 Controller 을 만들고 테스트 해보는 것으로 하자.
@@ -270,7 +270,7 @@ management.endpoints.web.exposure.include=hystrix.stream
 
 그럼 끝이다. (응? 이게 끝이라고?) 그렇다. 필자도 아주 놀랬는데 생각해보니 모니터링을 위해 별도의 코드가 들어가는 자체가 이상한 부분같다. 아주 심플하게 모듈과 설정만 추가해주면 모니터링이 가능하다. 그럼 진짜 모니터링을 해보자. 일부러 여러번 호출해서 서킷브레이커를 발동시키면 모니터링 페이지에서는 어떤식으로 나오는지 확인해보자. 우선 이렇게 설정한뒤 실행을 하면 `/hystrix`로 접근이 가능하고 귀엽지만 뭔가 놀랜 표정의 곰돌이가 반기는 것을 확인할 수 있다. 그다음 url 에 `http://localhost:8080/actuator/hystrix.stream` 를 입력후 "Monitor Stream"을 클릭하면 아래와 같은 화면을 볼 수 있다.
 
-{% image fancybox clear center hystrix.jpg 곰돌이가 화난것 같다. (코딩좀 잘하라고?) %}
+{% image fancybox clear center hystrix.jpg 곰돌이가 조금 화난것 같다. (코딩좀 잘하라고?) %}
 
 뭔가 로딩중인것 같은데 올바른 요청 `/index?key=taetaetae` 을 해보면 그래프가 바뀌고 잘못된 요청 `/index?key=taekwan` 을 여러번 해보다가 잠시 멈추고 를 반복해보면 서킷브레이커가 open 되었다가 다시 close 된것을 확인할 수 있다.
 
