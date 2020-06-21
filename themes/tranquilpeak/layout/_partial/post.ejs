@@ -1,0 +1,66 @@
+<%
+    var tableOfContents = null;
+    var postContent = post.content;
+
+    // Generate and insert table of contents in post content
+    if ((/<!--(\s*)[t|T][o|O][c|C](\s*)-->/).test(postContent)) {
+        if (__('post.toc')) {
+            tableOfContents = '<h1 id=\"table-of-contents\">' + __('post.toc') + '</h1>';
+        } else {
+            tableOfContents = '<span id="table-of-contents"></span>';
+        }
+        tableOfContents += toc(postContent, {list_number: false})
+        postContent = postContent.replace(/<!--(\s*)[t|T][o|O][c|C](\s*)-->/, tableOfContents)
+    }
+    // Replace `<!-- endcontent -->` by `</div>` and `<!-- content -->` by `</div class="main-content-wrap">`
+    // it's an hack to insert html tag without
+    // having auto delete or auto closed by the markdown render engine
+    // Currently used to insert an image in full width, out of `main-content-wrap` div
+    // which center the content and have a limited width (750px)
+    postContent = postContent.replace(/<!-- ?endcontent ?-->/g, '</div>')
+                               .replace(/<!-- ?content ?-->/g, '<div class="main-content-wrap">');
+%>
+<article class="post">
+    <div class="main-content-wrap">
+        <%- partial('ad') %>
+    </div>
+    <% if (post.coverCaption) { %>
+        <span class="post-header-cover-caption caption"><%= post.coverCaption %></span>
+    <% } %>
+    <% if (!post.coverImage || post.coverMeta === 'out') { %>
+        <%- partial('post/header')%>
+    <% } %>
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <%- postContent %>
+            <%- partial('post/gallery') %>
+        </div>
+    </div>
+    <style>.bmc-button img{width: 27px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{line-height: 36px !important;height:37px !important;text-decoration: none !important;display:inline-flex !important;color:#000000 !important;background-color:#FFDD00 !important;border-radius: 3px !important;border: 1px solid transparent !important;padding: 1px 9px !important;font-size: 22px !important;letter-spacing: 0.6px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Cookie', cursive !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#000000 !important;}</style><link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><center><br><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/taetaetae"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:5px">Buy me a coffee</span></a>
+    <!--<br><a href="http://www.naver.com"><img src="https://i.imgur.com/ietEvly.png" style="height:46px"></a>-->
+    </center>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        <%- partial('ad') %>
+        <% if ((post.tags) && (post.tags.length > 0)) { %>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small"><%= __('post.tagged_in') %></span><br/>
+                <%- partial('post/tag', {tags: post.tags})%>
+            </div>
+        <% } %>
+        <% if (post.actions === undefined || post.actions) { %>
+            <%- partial('post/actions', {postContent: postContent}) %>
+        <% } %>        
+        <!--  utteranc comment -->
+        <% if (config.utterances.enable == true) { %>
+        <script src="https://utteranc.es/client.js"
+                repo="taetaetae/blog-comment"
+                issue-term="pathname"
+                label="Comment"
+                theme="github-light"
+                crossorigin="anonymous"
+                async>
+        </script>
+        <% } %>
+    </div>
+</article>
+
