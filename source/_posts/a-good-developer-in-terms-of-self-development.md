@@ -1,5 +1,5 @@
 ---
-title: 그런 개발자로 괜찮은가 - '자기개발' 편
+title: 그런 개발자로 괜찮은가 - '자기계발' 편
 date: 2020-06-28 20:51:03
 categories:
   - essay
@@ -59,8 +59,8 @@ thumbnailImage: self-development-logo.jpg
 
 　자신만의 기술 스택을 정리하는 것 또한 방법이 될 수 있다. 쿠버네티스가 요즘 뜨고 있다고? 머신러닝이 대세라고? 하며 요즘 뜨는 기술들만 따라 하는 자세보다 자신이 생각하는 기본기를 탄탄히 다지면서 각자의 호흡, 각자의 속도를 유지하며 꾸준하게 기술 스택을 만들어 나가는 게 올바른 방법이라 생각이 든다. 우리는 1~2년 짧게 개발만 하는 것이 아니라 오랫동안 마라톤처럼 달려야 하기 때문에 탄탄한 기본기를 다지는 자신만의 방법이 필요한 때이다.
 
-{% image fancybox clear center black9p.jpg e.g. <a href="https://black9p.github.io/">black9p</a>님의 노션을 활용한 개인 기술스택 정리 %}
-
+{% image fancybox clear center black9p.jpg  %}
+<center>e.g. <a href="https://black9p.github.io/">black9p</a>님의 노션을 활용한 개인 기술스택 정리</center>
 
 ### # 마치며 
 
