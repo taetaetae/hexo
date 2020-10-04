@@ -1,6 +1,6 @@
 ---
 title: 빌드/테스트는 내가 해줄게. 너는 코딩에 집중해 (by GitHub Pull Request Builder)
-date: 2020-09-06 00:32:17
+date: 2020-09-07 10:09:56
 categories: tech
 tags:
   - Github
